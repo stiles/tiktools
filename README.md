@@ -199,7 +199,7 @@ TikTok's automatic speech recognition (ASR) has some limitations:
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/tiktools.git
+git clone https://github.com/stiles/tiktools.git
 cd tiktools
 
 # Install in development mode
@@ -225,8 +225,8 @@ MIT License - see LICENSE file for details.
 ## Support
 
 - Email: mattstiles@gmail.com
-- Issues: [GitHub Issues](https://github.com/yourusername/tiktools/issues)
-- Discussions: [GitHub Discussions](https://github.com/yourusername/tiktools/discussions)
+- Issues: [GitHub Issues](https://github.com/stiles/tiktools/issues)
+- Discussions: [GitHub Discussions](https://github.com/stiles/tiktools/discussions)
 
 ## Citation
 
@@ -234,10 +234,10 @@ If you use this toolkit in your research, please cite:
 
 ```bibtex
 @software{tiktools2025,
-  author = {Your Name},
+  author = {Matt Stiles},
   title = {tiktools: A Python toolkit for TikTok data extraction and analysis},
   year = {2025},
-  url = {https://github.com/yourusername/tiktools}
+  url = {https://github.com/stiles/tiktools}
 }
 ```
 

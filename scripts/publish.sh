@@ -1,0 +1,112 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+echo "Starting the tiktools publishing process..."
+echo "============================================="
+
+ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+cd "$ROOT_DIR"
+
+# Prefer pyproject.toml version; fallback to package __version__
+if command -v python >/dev/null 2>&1; then
+  VERSION="$(python - <<'PY'
+import re, sys
+from pathlib import Path
+pp = Path('pyproject.toml').read_text()
+m = re.search(r"^version\s*=\s*\"([^\"]+)\"", pp, re.M)
+if m:
+    print(m.group(1))
+else:
+    from tiktools import __version__
+    print(__version__)
+PY
+)"
+else
+  VERSION=""
+fi
+
+if [[ -z "${VERSION}" ]]; then
+    echo "Error: Could not determine version from pyproject.toml or tiktools/__init__.py" >&2
+    exit 1
+fi
+
+echo "You are about to publish version '${VERSION}'."
+echo
+
+echo "--- Git Status Check ---"
+if ! git diff-index --quiet HEAD --; then
+    echo "Warning: Uncommitted changes detected."
+    read -p "Continue anyway? (y/n) " -n 1 -r; echo
+    [[ $REPLY =~ ^[Yy]$ ]] || { echo "Cancelled."; exit 1; }
+fi
+
+if [[ "${NONINTERACTIVE:-}" == "1" ]]; then
+  echo "--- Pre-flight Checklist (non-interactive) ---"
+  echo "Skipping prompts due to NONINTERACTIVE=1"
+else
+  echo "--- Pre-flight Checklist ---"
+  read -p "Have you updated CHANGELOG.md? (y/n) " -n 1 -r; echo
+  [[ $REPLY =~ ^[Yy]$ ]] || { echo "Cancelled."; exit 1; }
+
+  read -p "Have you updated README.md? (y/n) " -n 1 -r; echo
+  [[ $REPLY =~ ^[Yy]$ ]] || { echo "Cancelled."; exit 1; }
+
+  read -p "Have you tested the package locally? (y/n) " -n 1 -r; echo
+  [[ $REPLY =~ ^[Yy]$ ]] || { echo "Cancelled."; exit 1; }
+  
+  read -p "Have you updated the version in pyproject.toml and __init__.py? (y/n) " -n 1 -r; echo
+  [[ $REPLY =~ ^[Yy]$ ]] || { echo "Cancelled."; exit 1; }
+fi
+
+echo "Cleaning old builds..."
+rm -rf build dist *.egg-info
+
+echo "Building..."
+python -m build
+
+echo "Build complete:"
+ls -l dist | cat
+echo
+
+if [[ "${NONINTERACTIVE:-}" == "1" && -n "${PUBLISH_TARGET:-}" ]]; then
+  choice="$PUBLISH_TARGET"
+else
+  echo "What would you like to do?"
+  select choice in "Publish to TestPyPI" "Publish to PyPI (Official)" "Cancel"; do
+    break
+  done
+fi
+
+case $choice in
+  "Publish to TestPyPI")
+    [[ -n "${PYPI_TEST:-}" ]] || { echo "Error: PYPI_TEST is not set"; exit 1; }
+    python -m twine upload --repository-url https://test.pypi.org/legacy/ -u __token__ -p "$PYPI_TEST" dist/*
+    echo "Published to TestPyPI: https://test.pypi.org/project/tiktools/${VERSION}/"
+    echo ""
+    echo "Test installation with:"
+    echo "  pip install -i https://test.pypi.org/simple/ tiktools==${VERSION}"
+    ;;
+  "Publish to PyPI (Official)")
+    if [[ "${NONINTERACTIVE:-}" != "1" ]]; then
+      read -p "Publish to OFFICIAL PyPI? (y/n) " -n 1 -r; echo
+      [[ $REPLY =~ ^[Yy]$ ]] || { echo "Cancelled."; exit 1; }
+    fi
+    [[ -n "${PYPI:-}" ]] || { echo "Error: PYPI is not set"; exit 1; }
+    python -m twine upload -u __token__ -p "$PYPI" dist/*
+    echo "Published to PyPI: https://pypi.org/project/tiktools/${VERSION}/"
+    echo ""
+    echo "Install with:"
+    echo "  pip install tiktools"
+    echo ""
+    echo "Don't forget to:"
+    echo "  1. Create a GitHub release: https://github.com/stiles/tiktools/releases/new"
+    echo "  2. Tag the release as v${VERSION}"
+    echo "  3. Copy the CHANGELOG.md entry to the release notes"
+    ;;
+  *) echo "Cancelled.";;
+esac
+
+echo "============================================="
+echo "Done."
+

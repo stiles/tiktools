@@ -45,9 +45,9 @@ examples = [
 ]
 
 [project.urls]
-Documentation = "https://github.com/mattystiles/tiktools#readme"
-Issues = "https://github.com/mattystiles/tiktools/issues"
-Source = "https://github.com/mattystiles/tiktools"
+Documentation = "https://github.com/stiles/tiktools#readme"
+Issues = "https://github.com/stiles/tiktools/issues"
+Source = "https://github.com/stiles/tiktools"
 
 [tool.hatch.build.targets.wheel]
 packages = ["tiktools"]
