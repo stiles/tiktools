@@ -106,7 +106,7 @@ def extract_review_data(transcript: str, client: OpenAI, model: str = "gpt-4o-mi
         return result
         
     except Exception as e:
-        print(f"  ✗ OpenAI API error: {e}")
+        print(f"  X OpenAI API error: {e}")
         return {
             "is_school_food_review": False,
             "day_number": None,
@@ -165,7 +165,7 @@ def process_transcripts(
     processed_post_ids = set()
     
     if update_mode and existing_reviews_file and existing_reviews_file.exists():
-        print(f"\n🔄 Update mode: Loading existing reviews from {existing_reviews_file}...")
+        print(f"\nUpdate mode: Loading existing reviews from {existing_reviews_file}...")
         try:
             with open(existing_reviews_file, 'r', encoding='utf-8') as f:
                 existing_data = json.load(f)
@@ -173,7 +173,7 @@ def process_transcripts(
                 processed_post_ids = {r['post_id'] for r in existing_reviews}
                 print(f"  Found {len(existing_reviews)} existing reviews ({len(processed_post_ids)} post IDs)")
         except Exception as e:
-            print(f"  ⚠ Warning: Could not load existing reviews: {e}")
+            print(f"  Warning: Could not load existing reviews: {e}")
             print(f"  Proceeding with full processing...")
     
     results = {
@@ -199,7 +199,7 @@ def process_transcripts(
         
         # Skip if already processed in update mode
         if update_mode and post_id in processed_post_ids:
-            print(f"  ⏭  Already processed, skipping...")
+            print(f"  Already processed, skipping...")
             results['skipped_existing'] += 1
             continue
         
@@ -208,7 +208,7 @@ def process_transcripts(
         review_data = extract_review_data(transcript_text, client, model)
         
         if 'error' in review_data:
-            print(f"  ✗ Failed to process")
+            print(f"  X Failed to process")
             results['failed'] += 1
             continue
         
@@ -226,9 +226,9 @@ def process_transcripts(
                 results['needs_manual_review'] += 1
             
             # Print status
-            status = "✓"
+            status = "OK"
             if needs_review:
-                status = "⚠"
+                status = "WARNING"
             
             if day_num:
                 print(f"  {status} School food review - Day {day_num}, {foods_count} foods")
@@ -236,7 +236,7 @@ def process_transcripts(
                 print(f"  {status} School food review - Day not mentioned, {foods_count} foods")
             
             if needs_review and review_reason:
-                print(f"    ⚠ Needs review: {review_reason}")
+                print(f"    WARNING: Needs review: {review_reason}")
             
             # Add to results
             results['reviews'].append({
@@ -261,7 +261,7 @@ def save_results(results: Dict, output_file: Path):
     with open(output_file, 'w', encoding='utf-8') as f:
         json.dump(results, f, indent=2, ensure_ascii=False)
     
-    print(f"\n✓ Saved review data to {output_file}")
+    print(f"\nSaved review data to {output_file}")
 
 
 def print_summary(results: Dict):
@@ -272,7 +272,7 @@ def print_summary(results: Dict):
     
     # Show update mode stats if applicable
     if results.get('skipped_existing', 0) > 0:
-        print(f"🔄 Update mode:")
+        print(f"Update mode:")
         print(f"  Existing reviews: {len(results['reviews']) - results['school_food_reviews']}")
         print(f"  Skipped (already processed): {results['skipped_existing']}")
         print(f"  New reviews processed: {results['new_reviews_processed']}")
@@ -385,7 +385,7 @@ def main():
         return 0
         
     except Exception as e:
-        print(f"\n✗ Error: {e}")
+        print(f"\nError: {e}")
         return 1
 
 

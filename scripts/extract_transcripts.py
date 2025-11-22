@@ -68,7 +68,7 @@ def main():
         print("=" * 80)
         
         if results.get('skipped_existing', 0) > 0:
-            print(f"🔄 Update mode:")
+            print(f"Update mode:")
             print(f"  Existing transcripts: {results.get('skipped_existing', 0)}")
             print(f"  New transcripts: {results['transcripts_downloaded']}")
             print(f"  Total transcripts: {len(results['transcripts'])}")
@@ -88,7 +88,7 @@ def main():
         return 0
         
     except Exception as e:
-        print(f"\n✗ Error: {e}")
+        print(f"\nError: {e}")
         return 1
 
 

@@ -73,7 +73,7 @@ def main():
         )
         return 0
     except Exception as e:
-        print(f"\n✗ Error: {e}")
+        print(f"\nError: {e}")
         return 1
 
 

@@ -129,14 +129,14 @@ def print_statistics(stats: Dict, reviews: list):
     # Overall statistics
     if 'overall' in stats and stats['overall']:
         overall = stats['overall']
-        print(f"\n📊 Overall:")
+        print(f"\nOverall:")
         print(f"  Average score: {overall['average_score']}/10")
         print(f"  Total items: {overall['total_items_scored']}")
         print(f"  Score range: {overall['min_score']} - {overall['max_score']}")
     
     # Category averages
     if 'category_averages' in stats and stats['category_averages']:
-        print(f"\n📂 Average scores by category:")
+        print(f"\nAverage scores by category:")
         # Sort by average score descending
         sorted_categories = sorted(
             stats['category_averages'].items(),
@@ -148,14 +148,14 @@ def print_statistics(stats: Dict, reviews: list):
     
     # Most common foods
     if 'most_common_foods' in stats and stats['most_common_foods']:
-        print(f"\n🍔 Most frequently reviewed foods:")
+        print(f"\nMost frequently reviewed foods:")
         for food in stats['most_common_foods']:
             avg = f"{food['average_score']:.2f}/10" if food['average_score'] is not None else "N/A"
             print(f"  {food['name']:30} {food['count']:2}x - avg: {avg}")
     
     # Daily averages
     if 'daily_averages' in stats and stats['daily_averages']:
-        print(f"\n📅 Average scores by day:")
+        print(f"\nAverage scores by day:")
         sorted_days = sorted(stats['daily_averages'].items())
         
         # Print in a more compact format (5 per line)
@@ -172,7 +172,7 @@ def print_statistics(stats: Dict, reviews: list):
             last_avg = sum(score for _, score in last_days) / len(last_days)
             trend = last_avg - first_avg
             
-            print(f"\n  📈 Trend: ", end="")
+            print(f"\n  Trend: ", end="")
             if trend > 0:
                 print(f"↑ Improving (+{trend:.2f} points from early days to recent days)")
             elif trend < 0:
@@ -181,13 +181,13 @@ def print_statistics(stats: Dict, reviews: list):
                 print("→ Stable (no significant change)")
     
     # Review coverage
-    print(f"\n📝 Review coverage:")
+    print(f"\nReview coverage:")
     print(f"  Total reviews: {len(reviews)}")
     with_day = sum(1 for r in reviews if r.get('day_number') is not None)
     print(f"  Reviews with day numbers: {with_day}")
     needs_review = sum(1 for r in reviews if r.get('needs_review', False))
     if needs_review > 0:
-        print(f"  ⚠ Flagged for manual review: {needs_review}")
+        print(f"  WARNING: Flagged for manual review: {needs_review}")
 
 
 def main():
@@ -239,7 +239,7 @@ def main():
             data['summary_statistics'] = stats
             with open(reviews_path, 'w', encoding='utf-8') as f:
                 json.dump(data, f, indent=2, ensure_ascii=False)
-            print(f"\n✓ Saved statistics to {reviews_path}")
+            print(f"\nSaved statistics to {reviews_path}")
         
         if args.output:
             output_path = Path(args.output)
@@ -250,12 +250,12 @@ def main():
             }
             with open(output_path, 'w', encoding='utf-8') as f:
                 json.dump(output_data, f, indent=2, ensure_ascii=False)
-            print(f"\n✓ Saved statistics to {output_path}")
+            print(f"\nSaved statistics to {output_path}")
         
         return 0
         
     except Exception as e:
-        print(f"\n✗ Error: {e}")
+        print(f"\nError: {e}")
         return 1
 
 

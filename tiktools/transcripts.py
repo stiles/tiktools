@@ -54,7 +54,7 @@ def download_subtitle(url: str, timeout: int = 30) -> Optional[str]:
         response.raise_for_status()
         return response.text
     except Exception as e:
-        print(f"  ✗ Failed to download subtitle: {e}")
+        print(f"  X Failed to download subtitle: {e}")
         return None
 
 
@@ -146,7 +146,7 @@ def extract_transcripts(
     transcripts_json_path = output_dir / f"{username}_transcripts.json"
     
     if update_mode and transcripts_json_path.exists():
-        print(f"\n🔄 Update mode: Loading existing transcripts...")
+        print(f"\nUpdate mode: Loading existing transcripts...")
         try:
             with open(transcripts_json_path, 'r', encoding='utf-8') as f:
                 existing_data = json.load(f)
@@ -154,7 +154,7 @@ def extract_transcripts(
                 processed_post_ids = {t['post_id'] for t in existing_transcripts}
                 print(f"  Found {len(existing_transcripts)} existing transcripts")
         except Exception as e:
-            print(f"  ⚠ Warning: Could not load existing transcripts: {e}")
+            print(f"  Warning: Could not load existing transcripts: {e}")
     
     results = {
         'total_posts': len(posts),
@@ -175,7 +175,7 @@ def extract_transcripts(
         
         # Skip if already processed
         if update_mode and post_id in processed_post_ids:
-            print(f"  ⏭  Already transcribed, skipping...")
+            print(f"  Already transcribed, skipping...")
             results['skipped_existing'] += 1
             continue
         
@@ -188,7 +188,7 @@ def extract_transcripts(
         subtitle = get_best_subtitle(post, language)
         
         if not subtitle:
-            print("  ✗ No suitable subtitle found")
+            print("  X No suitable subtitle found")
             results['failed'] += 1
             continue
         
@@ -198,10 +198,10 @@ def extract_transcripts(
         lang_name = subtitle.get('LanguageCodeName', 'unknown')
         source = subtitle.get('Source', 'unknown')
         
-        print(f"  ✓ Found subtitle: {lang_name} ({source})")
+        print(f"  Found subtitle: {lang_name} ({source})")
         
         if not is_original_audio:
-            print(f"  ⚠ Non-original audio - may contain song lyrics")
+            print(f"  WARNING: Non-original audio - may contain song lyrics")
         
         # Download subtitle
         subtitle_content = download_subtitle(subtitle_url)
@@ -214,7 +214,7 @@ def extract_transcripts(
         transcript = parse_webvtt(subtitle_content)
         
         if not transcript:
-            print("  ✗ Failed to parse transcript")
+            print("  X Failed to parse transcript")
             results['failed'] += 1
             continue
         
@@ -244,10 +244,10 @@ def extract_transcripts(
                 f.write(f"Language: {lang_name} ({source})\n")
                 f.write(f"Original Audio: {is_original_audio}\n")
                 if not is_original_audio:
-                    f.write(f"⚠ WARNING: Non-original audio - may contain song lyrics\n")
+                    f.write(f"WARNING: Non-original audio - may contain song lyrics\n")
                 f.write(f"\n{transcript}\n")
             
-            print(f"  ✓ Saved transcript ({len(transcript)} chars)")
+            print(f"  Saved transcript ({len(transcript)} chars)")
     
     # Save combined file if requested
     if output_format in ["combined", "both"]:
@@ -265,7 +265,7 @@ def extract_transcripts(
                 f.write(f"{t_data['transcript']}\n")
                 f.write("=" * 80 + "\n\n")
         
-        print(f"\n✓ Saved combined transcripts to {combined_file}")
+        print(f"\nSaved combined transcripts to {combined_file}")
     
     # Save JSON with all transcript data
     with open(transcripts_json_path, 'w', encoding='utf-8') as f:
@@ -280,7 +280,7 @@ def extract_transcripts(
             'transcripts': results['transcripts']
         }, f, indent=2, ensure_ascii=False)
     
-    print(f"\n✓ Saved transcript data to {transcripts_json_path}")
+    print(f"\nSaved transcript data to {transcripts_json_path}")
     
     return results
 

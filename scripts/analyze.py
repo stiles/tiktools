@@ -66,14 +66,14 @@ def main():
     args = parser.parse_args()
     
     if not args.transcripts_file.exists():
-        print(f"✗ Error: File not found: {args.transcripts_file}")
+        print(f"Error: File not found: {args.transcripts_file}")
         return 1
     
     try:
         analyze_transcripts(args.transcripts_file)
         return 0
     except Exception as e:
-        print(f"\n✗ Error: {e}")
+        print(f"\nError: {e}")
         return 1
 
 

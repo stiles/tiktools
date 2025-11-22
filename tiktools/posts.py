@@ -54,7 +54,7 @@ def fetch_user_posts(
         existing_post_ids = set()
         
         if update_mode and output_file and output_file.exists():
-            print(f"\n🔄 Update mode: Loading existing posts from {output_file}...")
+            print(f"\nUpdate mode: Loading existing posts from {output_file}...")
             try:
                 with open(output_file, 'r', encoding='utf-8') as f:
                     existing_data = json.load(f)
@@ -66,7 +66,7 @@ def fetch_user_posts(
                         print(f"  Found {len(existing_posts)} existing posts")
                         print(f"  Most recent post: {most_recent_time}")
             except Exception as e:
-                print(f"  ⚠ Warning: Could not load existing posts: {e}")
+                print(f"  Warning: Could not load existing posts: {e}")
                 print(f"  Proceeding with full fetch...")
         
         print(f"Fetching posts...")
@@ -105,7 +105,7 @@ def fetch_user_posts(
         
         # Merge with existing posts if in update mode
         if update_mode and existing_posts:
-            print(f"\n🔄 Merging {len(all_posts)} new posts with {len(existing_posts)} existing posts...")
+            print(f"\nMerging {len(all_posts)} new posts with {len(existing_posts)} existing posts...")
             all_posts = all_posts + existing_posts
             print(f"  Total posts after merge: {len(all_posts)}")
         
@@ -128,11 +128,11 @@ def fetch_user_posts(
                 json.dump(output_data, f, indent=2, ensure_ascii=False)
             
             if update_mode and new_posts_count > 0:
-                print(f"\n✓ Successfully saved {len(all_posts)} total posts ({new_posts_count} new) to {output_file}")
+                print(f"\nSuccessfully saved {len(all_posts)} total posts ({new_posts_count} new) to {output_file}")
             elif update_mode:
-                print(f"\n✓ No new posts found. File unchanged: {output_file}")
+                print(f"\nNo new posts found. File unchanged: {output_file}")
             else:
-                print(f"\n✓ Successfully saved {len(all_posts)} posts to {output_file}")
+                print(f"\nSuccessfully saved {len(all_posts)} posts to {output_file}")
             print(f"  File size: {output_file.stat().st_size / 1024:.2f} KB")
         
         return output_data
