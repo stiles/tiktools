@@ -9,12 +9,12 @@ Extract post metadata, transcribe videos using TikTok's built-in subtitles and a
 
 ## Features
 
-- 🎯 **Fetch post metadata** - Download complete post data for any TikTok user
-- 📝 **Extract transcripts** - Get speech-to-text from videos using TikTok's ASR subtitles
-- 🔄 **Incremental updates** - Only fetch new content to save API costs
-- 🎵 **Audio detection** - Flag videos with non-original audio (songs vs. speech)
-- 📦 **Pip-installable** - Easy to install and use in your projects
-- 🔌 **Extensible** - Build custom analysis tools on top of the core toolkit
+- **Fetch post metadata** - Download complete post data for any TikTok user
+- **Extract transcripts** - Get speech-to-text from videos using TikTok's ASR subtitles
+- **Incremental updates** - Only fetch new content to save API costs
+- **Audio detection** - Flag videos with non-original audio (songs vs. speech)
+- **Pip-installable** - Easy to install and use in your projects
+- **Extensible** - Build custom analysis tools on top of the core toolkit
 
 ## Installation
 
@@ -220,13 +220,13 @@ MIT License - see LICENSE file for details.
 ## Acknowledgments
 
 - Built on top of [TikAPI](https://tikapi.io)
-- Inspired by the need for better TikTok research tools
+- Inspired by the need for more TikTok research tools
 
 ## Support
 
-- 📧 Email: your.email@example.com
-- 🐛 Issues: [GitHub Issues](https://github.com/yourusername/tiktools/issues)
-- 💬 Discussions: [GitHub Discussions](https://github.com/yourusername/tiktools/discussions)
+- Email: mattstiles@gmail.com
+- Issues: [GitHub Issues](https://github.com/yourusername/tiktools/issues)
+- Discussions: [GitHub Discussions](https://github.com/yourusername/tiktools/discussions)
 
 ## Citation
 

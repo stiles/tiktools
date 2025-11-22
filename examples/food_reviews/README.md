@@ -75,16 +75,16 @@ This script has no API dependencies and runs instantly.
 ### Statistics
 
 ```
-📊 Overall:
+Overall:
   Average score: 6.44/10
   Total items: 131
   
-📂 Average scores by category:
+Average scores by category:
   drink    7.58/10 (13 items)
   dessert  7.40/10 (5 items)
   side     5.91/10 (47 items)
   
-📈 Trend: ↑ Improving (+0.42 points)
+Trend: ↑ Improving (+0.42 points)
 ```
 
 ## Adapting this example
