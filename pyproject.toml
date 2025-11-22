@@ -39,6 +39,8 @@ dev = [
   "black>=22.0",
   "mypy>=0.990",
   "ruff>=0.1.0",
+  "build>=1.0.0",
+  "twine>=6.0.0",
 ]
 examples = [
   "openai>=1.0.0",
