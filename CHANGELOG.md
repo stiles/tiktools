@@ -5,7 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.1.0] - 2025-01-XX
+## [Unreleased]
+
+### Added
+- Test suite with 21 tests covering core functionality
+- Tests for API client, transcript extraction, post fetching and integration
+- Test coverage reporting with pytest-cov (55% overall coverage)
+- Added build and twine to dev dependencies for easier publishing
+
+## [0.1.0] - 2025-11-22
 
 ### Added
 - Initial release of tiktools
@@ -33,5 +41,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - TikAPI key for core functionality
 - Optional: OpenAI API key for AI-powered analysis examples
 
+[Unreleased]: https://github.com/stiles/tiktools/compare/v0.1.0...HEAD
 [0.1.0]: https://github.com/stiles/tiktools/releases/tag/v0.1.0
 

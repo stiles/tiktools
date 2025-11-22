@@ -2,10 +2,7 @@
 
 **A Python toolkit for TikTok data extraction and analysis using TikAPI.**
 
-Extract post metadata, transcribe videos using TikTok's built-in subtitles and analyze content at scale. Perfect for researchers, journalists and data analysts.
-
-[![PyPI version](https://badge.fury.io/py/tiktools.svg)](https://badge.fury.io/py/tiktools)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+Extract post metadata and transcribe videos using TikTok's built-in subtitles.
 
 ## Features
 
