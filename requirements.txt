@@ -1,0 +1,13 @@
+# Core dependencies
+tikapi>=1.0.0
+requests>=2.28.0
+
+# Development dependencies (optional)
+# pytest>=7.0
+# black>=22.0
+# mypy>=0.990
+# ruff>=0.1.0
+
+# Example dependencies (optional)
+# openai>=1.0.0
+
