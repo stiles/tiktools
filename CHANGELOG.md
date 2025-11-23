@@ -7,11 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2025-11-23
+
 ### Added
 - Test suite with 21 tests covering core functionality
 - Tests for API client, transcript extraction, post fetching and integration
 - Test coverage reporting with pytest-cov (55% overall coverage)
 - Added build and twine to dev dependencies for easier publishing
+- `skip_existing` parameter in `extract_transcripts()` to protect manually edited transcript files
+
+### Changed
+- Transcript extraction now supports skipping files that already exist on disk to prevent overwriting manual edits
 
 ## [0.1.0] - 2025-11-22
 
@@ -41,6 +47,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - TikAPI key for core functionality
 - Optional: OpenAI API key for AI-powered analysis examples
 
-[Unreleased]: https://github.com/stiles/tiktools/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/stiles/tiktools/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/stiles/tiktools/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/stiles/tiktools/releases/tag/v0.1.0
 
