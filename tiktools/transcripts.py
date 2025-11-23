@@ -101,7 +101,8 @@ def extract_transcripts(
     output_dir: Optional[Path] = None,
     output_format: str = "individual",
     language: str = "eng",
-    update_mode: bool = False
+    update_mode: bool = False,
+    skip_existing: bool = False
 ) -> Dict:
     """
     Extract transcripts from all posts in a JSON file.
@@ -112,6 +113,7 @@ def extract_transcripts(
         output_format: Either "individual" (one file per post) or "combined" (single file)
         language: Preferred language code for subtitles
         update_mode: Only process new posts
+        skip_existing: Skip posts that already have transcript files on disk (protects manual edits)
         
     Returns:
         Dictionary with extraction results
@@ -178,6 +180,14 @@ def extract_transcripts(
             print(f"  Already transcribed, skipping...")
             results['skipped_existing'] += 1
             continue
+        
+        # Skip if transcript file already exists (protects manual edits)
+        if skip_existing:
+            transcript_file = output_dir / f"{post_id}.txt"
+            if transcript_file.exists():
+                print(f"  Transcript file exists, skipping to protect manual edits...")
+                results['skipped_existing'] += 1
+                continue
         
         # Check audio type
         music = post.get('music', {})
