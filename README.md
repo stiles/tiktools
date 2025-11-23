@@ -90,16 +90,34 @@ data/
 
 ## Example: Food reviews analysis
 
-See `examples/food_reviews/` for a complete example that:
-- Extracts structured review data using OpenAI
-- Calculates statistics by category and day
-- Handles scoring and categorization
+See `examples/food_reviews/` for a complete example analyzing @davis_big_dawg's school lunch reviews.
+
+The example includes a standalone script that demonstrates the full workflow:
 
 ```bash
 cd examples/food_reviews
-python extract_reviews.py ../../data/davis_big_dawg/transcripts/davis_big_dawg_transcripts.json
-python calculate_stats.py ../../data/davis_big_dawg/davis_big_dawg_reviews.json
+
+# Install tiktools and dependencies
+pip install tiktools openai
+
+# Set up API keys
+export TIKAPI_KEY="your_tikapi_key_here"
+export OPENAI_API_KEY="your_openai_key_here"
+
+# Fetch posts, transcripts and extract review data
+python fetch_davis_archive.py --extract-reviews
+
+# Calculate statistics
+python calculate_stats.py data/davis_big_dawg/davis_big_dawg_reviews.json
 ```
+
+Features:
+- Fetches all posts and transcripts for a TikTok user
+- Extracts structured review data using OpenAI
+- Calculates statistics by category and day
+- Update mode to only fetch new content
+
+See the example README for full documentation and customization options.
 
 ## API Reference
 
