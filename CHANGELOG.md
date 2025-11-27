@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2025-11-27
+
+### Added
+- **Thumbnail downloading** - New `download_thumbnails()` function to save video thumbnails
+- Support for multiple thumbnail types: cover, origin, dynamic, and zoom (240-960px)
+- Automatic image format detection from URLs and headers
+- Thumbnail metadata tracking with JSON output
+- **Translation support** - New `translate_transcripts()` function for multi-language translation
+- AWS Translate integration with cost estimation
+- Abstract translation service interface for future provider support
+- Language code normalization (2-letter and 3-letter ISO codes)
+- Check for native TikTok subtitles before translating
+- CLI scripts: `download_thumbnails.py` and `translate_transcripts.py`
+- Update mode support for thumbnails and translations
+- Skip-existing mode to protect manual file organization
+
+### Changed
+- Updated package version to 0.3.0
+- Enhanced documentation with thumbnail and translation examples
+- Added AWS boto3 as optional dependency for translation features
+
 ## [0.2.0] - 2025-11-23
 
 ### Added
@@ -47,7 +68,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - TikAPI key for core functionality
 - Optional: OpenAI API key for AI-powered analysis examples
 
-[Unreleased]: https://github.com/stiles/tiktools/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/stiles/tiktools/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/stiles/tiktools/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/stiles/tiktools/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/stiles/tiktools/releases/tag/v0.1.0
 

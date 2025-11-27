@@ -16,7 +16,9 @@ def fetch_user_posts(
     max_posts: Optional[int] = None,
     output_file: Optional[Path] = None,
     sandbox: bool = False,
-    update_mode: bool = False
+    update_mode: bool = False,
+    download_thumbnails: bool = False,
+    thumbnail_type: str = "cover"
 ) -> Dict:
     """
     Retrieve all posts for a given TikTok username.
@@ -28,12 +30,14 @@ def fetch_user_posts(
         output_file: Path to save JSON output
         sandbox: Whether to use sandbox server for testing
         update_mode: Only fetch new posts since last run
+        download_thumbnails: Download thumbnails immediately (recommended, URLs expire)
+        thumbnail_type: Type of thumbnail to download if download_thumbnails=True
         
     Returns:
         Dictionary containing all posts and metadata
         
     Example:
-        >>> data = fetch_user_posts("davis_big_dawg")
+        >>> data = fetch_user_posts("davis_big_dawg", download_thumbnails=True)
         >>> print(f"Fetched {len(data['posts'])} posts")
     """
     # Initialize API client
@@ -134,6 +138,20 @@ def fetch_user_posts(
             else:
                 print(f"\nSuccessfully saved {len(all_posts)} posts to {output_file}")
             print(f"  File size: {output_file.stat().st_size / 1024:.2f} KB")
+            
+            # Download thumbnails if requested (while URLs are fresh)
+            if download_thumbnails and len(all_posts) > 0:
+                print(f"\nDownloading thumbnails (type: {thumbnail_type})...")
+                try:
+                    from .thumbnails import download_thumbnails as dl_thumbnails
+                    thumbnail_results = dl_thumbnails(
+                        posts_file=output_file,
+                        thumbnail_type=thumbnail_type,
+                        update_mode=update_mode
+                    )
+                    print(f"  Downloaded {thumbnail_results['thumbnails_downloaded']} thumbnails")
+                except Exception as e:
+                    print(f"  Warning: Thumbnail download failed: {e}")
         
         return output_data
         

@@ -53,6 +53,17 @@ def main():
         action="store_true",
         help="Update mode: only fetch new posts"
     )
+    parser.add_argument(
+        "--download-thumbnails",
+        action="store_true",
+        help="Download thumbnails immediately (recommended - URLs expire quickly)"
+    )
+    parser.add_argument(
+        "--thumbnail-type",
+        choices=["cover", "origin", "dynamic", "zoom_240", "zoom_480", "zoom_720", "zoom_960"],
+        default="cover",
+        help="Type of thumbnail to download (default: cover)"
+    )
     
     args = parser.parse_args()
     
@@ -69,7 +80,9 @@ def main():
             max_posts=args.max_posts,
             output_file=output_file,
             sandbox=args.sandbox,
-            update_mode=args.update
+            update_mode=args.update,
+            download_thumbnails=args.download_thumbnails,
+            thumbnail_type=args.thumbnail_type
         )
         return 0
     except Exception as e:
