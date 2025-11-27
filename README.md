@@ -15,6 +15,17 @@ Extract post metadata, thumbnails and get video transcription and translation wi
 - **Pip-installable** - Easy to install and use in your projects
 - **Extensible** - Build custom analysis tools on top of the core toolkit
 
+## Example in the wild
+
+**[davis.food](https://davis.food)** - A live dashboard tracking @davis_big_dawg's viral school lunch reviews built mostly with tiktools. 
+
+- Automated data collection (posts, transcripts, thumbnails)
+- Real-time engagement tracking
+- Interactive D3.js charts and statistics
+- GitHub Actions workflow for automatic updates
+
+The complete source code is available: [github.com/stiles/davis.food](https://github.com/stiles/davis.food)
+
 ## Installation
 
 ```bash
@@ -116,6 +127,8 @@ data/
 
 ## Example: Food reviews analysis
 
+**Live example:** [davis.food](https://davis.food) - A production dashboard tracking @davis_big_dawg's viral school lunch reviews with automatic updates.
+
 See `examples/food_reviews/` for a complete example analyzing @davis_big_dawg's school lunch reviews.
 
 The example includes a standalone script that demonstrates the full workflow:
@@ -130,8 +143,8 @@ pip install tiktools openai
 export TIKAPI_KEY="your_tikapi_key_here"
 export OPENAI_API_KEY="your_openai_key_here"
 
-# Fetch posts, transcripts and extract review data
-python fetch_davis_archive.py --extract-reviews
+# Fetch posts, transcripts, thumbnails and extract review data
+python fetch_davis_archive.py --extract-reviews --download-thumbnails
 
 # Calculate statistics
 python calculate_stats.py data/davis_big_dawg/davis_big_dawg_reviews.json
@@ -139,11 +152,14 @@ python calculate_stats.py data/davis_big_dawg/davis_big_dawg_reviews.json
 
 Features:
 - Fetches all posts and transcripts for a TikTok user
+- Downloads video thumbnails (URLs expire quickly!)
 - Extracts structured review data using OpenAI
 - Calculates statistics by category and day
 - Update mode to only fetch new content
 
 See the example README for full documentation and customization options.
+
+**Production deployment:** The complete [davis.food source code](https://github.com/stiles/davis.food) demonstrates how to build a production dashboard with GitHub Actions, Eleventy, D3.js charts and automated data updates.
 
 ## API Reference
 
